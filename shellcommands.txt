@@ -1,7 +1,0 @@
-echo BigGr33n | sudo -S yum -y install epel-release yum-utils
-echo BigGr33n | sudo -S yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
-echo BigGr33n | sudo -S yum-config-manager --enable remi-php73
-echo BigGr33n | sudo -S yum -y install php php-common php-opcache php-mcrypt php-cli php-gd php-curl php-mysqlnd httpd
-echo BigGr33n | sudo -S systemctl start httpd
-echo BigGr33n | sudo -S sed -i 's/^Listen 80$/Listen 6200/g' /etc/httpd/conf/httpd.conf
-echo BigGr33n | sudo -S systemctl restart httpd
