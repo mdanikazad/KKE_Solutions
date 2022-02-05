@@ -1,0 +1,52 @@
+---
+- name: create file and set ACL in app server1
+  hosts: stapp01
+  become: yes
+  tasks:
+   - name: create file blog.txt in app server1
+     file:
+        path: /opt/sysops/blog.txt
+        state: touch
+        
+   - name: set acl on file blog.txt
+     acl:
+       path: /opt/sysops/blog.txt
+       entity: tony
+       etype: group
+       permissions: r
+       state: present
+
+- name: create file and set ACL in app server2
+  hosts: stapp02
+  become: yes
+  tasks:
+   - name: create file story.txt in app server2
+     file:
+        path: /opt/sysops/story.txt
+        state: touch
+
+   - name: set acl on file story.txt
+     acl:
+       path: /opt/sysops/story.txt
+       entity: steve
+       etype: user
+       permissions: rw
+       state: present
+
+- name: create file and set ACL in app server3
+  hosts: stapp03
+  become: yes
+  tasks:
+   - name: create file media.txt in app server3
+     file:
+       path: /opt/sysops/media.txt
+       state: touch
+
+   - name: set acl on file media.txt
+     acl:
+       path: /opt/sysops/media.txt
+       entity: banner
+       etype: group
+       permissions: rw
+       state: present
+...
