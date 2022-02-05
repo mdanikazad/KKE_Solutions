@@ -1,3 +1,12 @@
+
+# KKE-Rolling-Updates-And-Rolling-Back-Deployments-in-Kubernetes 
+# kubectl create namespace datacenter 2 vi roll-dep.yml 3 kubectl apply -f roll-dep.yml 
+# kubectl get all 
+# kubectl -n datacenter set image deployment/httpd-deploy httpd:2.4.43 --record 6 kubectl -n datacenter set image deployment/httpd-deploy httpd:2.4.43 
+# kubectl set image deployment/httpd-deploy httpd:2.4.43 
+# kubectl set image deployment/httpd-deploy httpd:2.4.43 
+# kubectl get pods -n datacenter 10 kubectl edit deployment/httpd-deploy 11 kubectl edit deployment/httpd-deploy -n datacenter 12 kubectl rollout status deployment/httpd-deploy -n datacenter 13 kubectl get pods -n datacenter 14 kubectl describe deployment -n datacenter 15 kubectl rollout history deployment/httpd-deploy -n datacenter 16 kubectl rollout undo deployment/httpd-deploy -n datacenter 17 kubectl describe deployment -n datacenter 18 kubectl rollout status deployment/httpd-deploy -n datacenter 19 kubectl describe deployment -n datacenter 20 history 
+
 apiVersion: apps/v1  
 kind: Deployment
 metadata:
@@ -44,3 +53,4 @@ spec:
       targetPort: 80
       nodePort: 30008
   type: NodePort
+
