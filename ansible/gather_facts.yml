@@ -1,0 +1,41 @@
+---
+
+-
+
+  hosts: stapp01, stapp02, stapp03
+
+  gather_facts: true
+
+  become: yes
+
+  become_method: sudo
+
+  tasks:
+
+    - name: create a  file using blockinfile
+
+      blockinfile:
+
+       create: yes
+
+       path: /root/facts.txt
+
+       block: |
+         Ansible managed node IP is {{ ansible_default_ipv4.address }}
+    - name: Install apache packages
+
+      package:
+
+       name: httpd
+
+    - name: file copy
+
+      shell: cp /root/facts.txt /var/www/html/index.html
+
+    - name: ensure httpd is running
+
+      systemd:
+
+       name: httpd
+
+       state: restarted
