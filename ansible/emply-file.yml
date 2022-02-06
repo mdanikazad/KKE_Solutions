@@ -1,0 +1,10 @@
+- hosts: stapp02
+  gather_facts: false
+  become: true
+  tasks:
+  - name: Create empty file
+    file:
+      path: /tmp/file.txt
+      state: touch
+      owner: steve
+      group: steve
