@@ -1,0 +1,60 @@
+################################################################################################################################################################
+
+Deploy-nagios-Kubernets
+
+The Nautilus DevOps teams is planning to set up a Nagios monitoring tool to monitor some applications, services etc. They are planning to deploy it on Kubernetes cluster. Below you can find more details.
+
+    Create a deployment nagios-deployment for Nagios core. The container name must be nagios-container and it must use jasonrivers/nagios image.
+
+    Create a user and password for the Nagios core web interface, user must be xFusionCorp and password must be LQfKeWWxWD. (you can manually perform this step after deployment)
+
+    Create a service nagios-service for Nagios which must be of targetPort type. Port must be 80 and nodePort must be 30008.
+
+You can use any labels as per your choice.
+
+Note: The kubectl on jump_host has been configured to work with the kubernetes cluster.
+
+Finally do the following things
+
+kubectl exec -it pod-id -- bash
+
+htpasswd -c /opt/nagios/etc/htpasswd.users xFusionCorp
+
+################################################################################################################################################################
+
+---                                                                                                                       
+apiVersion: apps/v1                                                                                                       
+kind: Deployment                                                                                                          
+metadata:                                                                                                                 
+  labels:                                                                                                                 
+    app: nagios                                                                                                           
+  name: nagios-deployment                                                                                                 
+spec:                                                                                                                     
+  replicas: 1                                                                                                             
+  selector:                                                                                                               
+    matchLabels:                                                                                                          
+      app: nagios                                                                                                         
+  template:                                                                                                               
+    metadata:                                                                                                             
+      labels:                                                                                                             
+        app: nagios                                                                                                       
+    spec:                                                                                                                 
+      containers:                                                                                                         
+      - name: nagios-container                                                                                            
+        image: jasonrivers/nagios                                                                                         
+        ports:                                                                                                            
+        - containerPort: 80                                                                                               
+---                                                                                                                       
+apiVersion: v1                                                                                                            
+kind: Service                                                                                                             
+metadata:                                                                                                                 
+  name: nagios-service                                                                                                    
+spec:                                                                                                                     
+  ports:                                                                                                                  
+    - name: http                                                                                                          
+      port: 80                                                                                                            
+      nodePort: 30008                                                                                                     
+      protocol: TCP                                                                                                       
+  selector:         
+    app: nagios                                                                                                           
+  type: NodePor
